@@ -46,7 +46,7 @@ class User(Base):
     document = Column(String(25))
     phone = Column(String(15))
     email = Column(String(50))
-    password = Column(String(25))
+    password = Column(String(50))
     adress = Column(String(250))
     rol_id = Column(Integer, ForeignKey('rol.id'))
     state = Column(Boolean)
@@ -89,6 +89,7 @@ class Checkout_detail(Base):
     __tablename__ = 'checkout_detail'
     id = Column(Integer, primary_key = True)
     quantity = Column(Integer)
+    quantity_in= Column(Integer)
     checkout_id = Column(Integer, ForeignKey('checkout.id'))
     product_id = Column(Integer, ForeignKey('product.id'))
     price = Column(Integer)

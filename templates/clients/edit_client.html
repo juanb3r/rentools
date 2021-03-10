@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar cliente</title>
+</head>
+<body>
+    <h1>Editar cliente {{ cliente_id }}</h1>
+    <div class="row">
+        <form action="">
+            <label for="editNameClientText">Nombre</label>
+            <input id='editNameClientText'type="text" placeholder="Ingrese nombre" required value="Nombre">
+            <label for="editDocumentClientText">Documento</label>
+            <input id='editDocumentClientText'type="text" 
+            placeholder="Ingrese documento" required value="Documento">
+            <label for="editPhoneClientText">Teléfono</label>
+            <input id='editPhoneClientText'type="tel" 
+            placeholder="Ingrese teléfono" required value="Telefono">
+            <label for="editEmailClientText">Correo</label>
+            <input id='editEmailClientText'type="email" placeholder="Ingrese correo" value="correo@email.com">
+            <label for="editAddressClientText">Dirección</label>
+            <input id='editAddressClientText'type="text" placeholder="Ingrese dirección" value="Dirección 1 # 2 - 3">
+            <input id='editClientSubmit'type="submit" value="Editar">
+        </form>
+        <a href="/clientes">Regresar</a>
+
+    </div>
+</body>
+</html>

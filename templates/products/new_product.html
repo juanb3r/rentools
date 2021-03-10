@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Crear producto</title>
+</head>
+<body>
+    <h1>Crear producto</h1>
+    <div class="row">
+        <form action="">
+            <label for="newNameProductText">Nombre</label>
+            <input id='newNameProductText'type="text" placeholder="Ingrese nombre" required>
+            <label for="newDescriptionProductText">Descripción</label>
+            <input id='newDescriptionProductText'type="text" 
+            placeholder="Ingrese descripción" required>
+            <label for="newCodeProductText">Código</label>
+            <input id='newCodeProductText'type="text" 
+            placeholder="Ingrese código" required>
+            <label for="newCurrentStockProductText">Cantidad bodega</label>
+            <input id='newCurrentStockProductText'type="number" placeholder="Ingrese cantidad actual" required>
+            <label for="newStockProductText">Cantidad real</label>
+            <input id='newStockProductText'type="number" placeholder="Ingrese cantidad real" required>
+            <label for="newPriceProductText">Precio</label>
+            <input id='newPriceProductText'type="number" placeholder="Ingrese precio" required>
+            <label for="inputCatGroupProduct">Categoria</label>
+            <select required class="custom-select" id="inputCatGroupProduct">
+                <option value="HRM">Herramientas</option>
+                <option value="EQP">Equipos</option>
+            </select>
+            <label for="inputStateGroupProduct">Estado</label>
+            <select required class="custom-select" id="inputStateGroupProduct">
+                <option value="1">Activo</option>
+                <option value="0">Inactivo</option>
+            </select>
+            <input id='newProductSubmit'type="submit" value="Crear">
+        </form>
+        <a href="/productos">Regresar</a>
+
+    </div>
+</body>
+</html>

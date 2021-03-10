@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar usuario</title>
+</head>
+<body>
+    <h1>Editar usuario</h1>
+    <div class="row">
+        <form action="">
+            <label for="editNameUserText">Nombre</label>
+            <input id='editNameUserText'type="text" placeholder="Ingrese nombre" required value="Nombre">
+            <label for="editDocumentUserText">Documento</label>
+            <input id='editDocumentUserText'type="text" 
+            placeholder="Ingrese documento" required value="Documento">
+            <label for="editDocumentUserText">Contraseña</label>
+            <input id='editDocumentUserText'type="password" 
+            placeholder="Ingrese documento" required value="*********">
+            <label for="editPhoneUserText">Teléfono</label>
+            <input id='editPhoneUserText'type="tel" 
+            placeholder="Ingrese teléfono" required value="5000000">
+            <label for="editEmailUserText">Correo</label>
+            <input id='editEmailUserText'type="email" placeholder="Ingrese correo" value="edit@usuario.com">
+            <label for="editAddressUserText">Dirección</label>
+            <input id='editAddressUserText'type="text" placeholder="Ingrese dirección" value="dirección # editar - usuario">
+            <label for="inputRolGroupUser">Rol</label>
+            <select required value="Nombre" class="custom-select" id="inputRolGroupUser">
+                <option value="1">Admin</option>
+                <option value="2">Vendedor</option>
+            </select>
+            <label for="inputStateGroupUser">Estado</label>
+            <select required value="Nombre" class="custom-select" id="inputStateGroupUser">
+                <option value="1">Activo</option>
+                <option value="0">Inactivo</option>
+            </select>
+            <input id='editUserSubmit'type="submit" value="Editar">
+        </form>
+        <a href="/usuarios">Regresar</a>
+
+    </div>
+</body>
+</html>

@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nuevo rol</title>
+</head>
+<body>
+    <h1>Crear rol</h1>
+    <div class="row">
+        <form action="">
+            <label for="newNameRolText">Nombre</label>
+            <input id='newNameRolText'type="text" placeholder="Ingrese nombre" required>
+            <label for="newDescriptionRolText">Descripción</label>
+            <input id='newDescriptionRolText'type="text" placeholder="Ingrese descripción" required>
+            <select required class="custom-select" id="inputStateGroupRol">
+                <option value="1">Activo</option>
+                <option value="0">Inactivo</option>
+            </select>
+            <input id='newRolSubmit'type="submit" value="Crear">
+        </form>
+        <a href="/roles">Regresar</a>
+    </div>
+</body>
+</html>

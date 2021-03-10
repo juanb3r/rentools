@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar rol</title>
+</head>
+<body>
+    <h1>Editar rol {{ roles_id }}</h1>
+    <div class="row">
+        <form action="">
+            <label for="editNameRolText">Nombre</label>
+            <input id='editNameRolText'type="text" placeholder="Ingrese nombre" value="Nombre" required>
+            <label for="editDescriptionRolText">Descripción</label>
+            <input id='editDescriptionRolText'type="text" placeholder="Ingrese descripción" value="Descripción" required>
+            <select required class="custom-select" id="inputStateGroupRol">
+                <option value="1">Activo</option>
+                <option value="0">Inactivo</option>
+            </select>
+            <input id='editRolSubmit'type="submit" value="Editar">
+        </form>
+        <a href="/roles">Regresar</a>
+    </div>
+</body>
+</html>

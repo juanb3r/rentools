@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nueva categoria</title>
+</head>
+<body>
+    <h1>Crear categoria</h1>
+    <div class="row">
+        <form action="">
+            <label for="newNameCatText">Nombre</label>
+            <input id='newNameCatText'type="text" placeholder="Ingrese nombre" required>
+            <label for="newDescriptionCatText">Descripción</label>
+            <input id='newDescriptionCatText'type="text" placeholder="Ingrese descripción" required>
+            <select required class="custom-select" id="inputStateGroupCat">
+                <option value="1">Activo</option>
+                <option value="0">Inactivo</option>
+            </select>
+            <input id='newCatSubmit'type="submit" value="Crear">
+        </form>
+        <a href="/categorias">Regresar</a>
+    </div>
+</body>
+</html>

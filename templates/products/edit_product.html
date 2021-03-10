@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar producto</title>
+</head>
+<body>
+    <h1>Editar producto {{ producto_id }}</h1>
+    <div class="row">
+        <form action="">
+            <label for="editNameProductText">Nombre</label>
+            <input id='editNameProductText'type="text" placeholder="Ingrese nombre" value="Ingrese nombre" required>
+            <label for="editDescriptionProductText">Descripción</label>
+            <input id='editDescriptionProductText'type="text" 
+            placeholder="Ingrese descripción" value="Ingrese descripción" required>
+            <label for="editCodeProductText">Código</label>
+            <input id='editCodeProductText'type="text" 
+            placeholder="Ingrese código" value="Ingrese código" required>
+            <label for="editCurrentStockProductText">Cantidad bodega</label>
+            <input id='editCurrentStockProductText'type="number" placeholder="Ingrese cantidad actual" value="3" required>
+            <label for="editStockProductText">Cantidad real</label>
+            <input id='editStockProductText'type="number" placeholder="Ingrese cantidad real" value="5" required>
+            <label for="editPriceProductText">Precio</label>
+            <input id='editPriceProductText'type="number" placeholder="Ingrese precio" value="8" required>
+            <label for="inputCatGroupProduct">Categoria</label>
+            <select required class="custom-select" id="inputCatGroupProduct">
+                <option value="HRM">Herramientas</option>
+                <option value="EQP">Equipos</option>
+            </select>
+            <label for="inputStateGroupProduct">Estado</label>
+            <select required class="custom-select" id="inputStateGroupProduct">
+                <option value="1">Activo</option>
+                <option value="0">Inactivo</option>
+            </select>
+            <input id='editProductSubmit'type="submit" value="Editar">
+        </form>
+        <a href="/productos">Regresar</a>
+
+    </div>
+</body>
+</html>
