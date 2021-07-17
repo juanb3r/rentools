@@ -15,7 +15,7 @@
             {% if messages %}
               {% for message in messages%}
                 {% if message == 'Categoría eliminada'%}
-                  <div class="alert alert-danger" role="alert">           
+                  <div class="alert alert-danger" role="alert">
                 {% else %}
                   <div class="alert alert-success" role="alert">
                 {% endif %}
@@ -34,22 +34,22 @@
                 <th>Editar</th>
                 <th>Eliminar</th>
             </tr>
-            {%for c in categories%}
+            {%for category in categories%}
             <tr>
-                <td>{{c.id}}</td>
-                <td>{{c.name}}</td>
-                <td>{{c.description}}</td>
+                <td>{{category.id}}</td>
+                <td>{{category.name}}</td>
+                <td>{{category.description}}</td>
                 <td>
-                  {% if c.state == True %}
+                  {% if category.state == True %}
                     Activo
                   {% else %}
                     Inactivo
                   {% endif %}
 
                 </td>
-                <td><a href="/categorias/{{c.id}}/editar">Editar</a></td>
+                <td><a href="/categorias/{{category.id}}/editar">Editar</a></td>
                 <td>
-                    <form onSubmit="return confirm('¿Desea eliminar esta categoría?');" action="{{url_for('delete_category', categoria_id = c.id)}}" method="POST">
+                    <form onSubmit="return confirm('¿Desea eliminar esta categoría?');" action="{{url_for('delete_category', categoria_id = category.id)}}" method="POST">
                     <input type="submit"  value="Eliminar" class="btn btn-danger">
                     </form>
                 </td>

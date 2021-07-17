@@ -1,15 +1,8 @@
-from controllers.database_setup import Base, Client, Checkout, Checkout_detail
+from controllers.database_setup import Client, Checkout, Checkout_detail
+from controllers.db_session import DBSession
 
-from sqlalchemy.ext.declarative import declarative_base
-from sqlalchemy.orm import sessionmaker
-from sqlalchemy import create_engine
-
-engine = create_engine('sqlite:///alquiler_bd.db', echo=True, connect_args={"check_same_thread": False})
-
-Base.metadata.bind = engine
-
-DBSession = sessionmaker(bind = engine)
 session = DBSession()
+session = session.get_session()
 
 
 def show_checkouts_tb():
