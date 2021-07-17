@@ -14,7 +14,7 @@ def check_fields(state, name, desc):
             check['msg'] = 'Estado fuera de rango, no corresponde a un valor aceptado'
     except ValueError:
         check['status'] = False
-        check['msg'] = 'Estado de categoría inválido, no es un número'    
+        check['msg'] = 'Estado de categoría inválido, no es un número'
 
     return check
 

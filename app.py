@@ -16,6 +16,8 @@ app.register_error_handler(404, page_not_found)
 
 @app.route('/')
 @app.route('/inicio')
+@app.route('/home')
+@app.route('/index')
 def home():
     return render_template('home.html')
 
@@ -46,7 +48,6 @@ def new_category():
         state = request.form['newStateCatSelect']
 
         check = chf.check_fields(state, name, description)
-        
 
         if check['status']:
             result = ctb.new_category_tb(name, description, check['state'])
@@ -61,7 +62,7 @@ def new_category():
             render = render_template('categories/new_category.html')
     else:
         render = render_template('categories/new_category.html')
-    
+
     return render
 
 @app.route('/categorias/<int:categoria_id>/editar', methods = ['GET', 'POST'])
