@@ -7,9 +7,64 @@
     <title>Productos</title>
 </head>
 <body>
-    <h1>Se muestran los productos</h1>
+    
     <div class="row">
+        <h2>Productos</h2>
+        <br>
         <a href="/productos/nuevo">Crear producto</a>
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+              {% for message in messages%}
+                {% if message == 'Producto eliminado'%}
+                  <div class="alert alert-danger" role="alert">           
+                {% else %}
+                  <div class="alert alert-success" role="alert">
+                {% endif %}
+                {{ message }}
+              {% endfor %}
+              </div>
+            {% endif %}
+          {% endwith %}
+        <br>
+        <table>
+            <tr>
+                <th>Código</th>
+                <th>Nombre</th>
+                <th>Cant. Bodega</th>
+                <th>Cantidad</th>
+                <th>Precio</th>
+                <th>Categoría</th>
+                <th>Estado</th>
+                <th>Fecha</th>
+            </tr>
+            {%for p in products %}
+            <tr>
+                <td>{{p.code}}</td>
+                <td>{{p.name}}</td>
+                <td>{{p.current_stock}}</td>
+                <td>{{p.stock}}</td>
+                <td>{{p.price}}</td>
+                <td>{{p.category.name}}</td>
+                <td>
+                  {% if p.state == True %}
+                    Activo
+                  {% else %}
+                    Inactivo
+                  {% endif %}
+                </td>
+                <td>{{p.date}}</td>
+                <td><a href="/productos/{{p.id}}/editar">Editar</a></td>
+                <td>
+                    <form onSubmit="return confirm('¿Desea eliminar este producto?');" action="{{url_for('delete_product', producto_id = p.id)}}" method="POST">
+                    <input type="submit"  value="Eliminar" class="btn btn-danger">
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+    <div class="row">
+        
         <a href="../">Regresar</a>
 
     </div>

@@ -9,12 +9,13 @@
 <body>
     <h1>Crear rol</h1>
     <div class="row">
-        <form action="">
+        <form action="{{url_for('new_rol')}}" method="POST">
             <label for="newNameRolText">Nombre</label>
-            <input id='newNameRolText'type="text" placeholder="Ingrese nombre" required>
+            <input name="newNameRolText" id='newNameRolText'type="text" placeholder="Ingrese nombre" required>
             <label for="newDescriptionRolText">Descripción</label>
-            <input id='newDescriptionRolText'type="text" placeholder="Ingrese descripción" required>
-            <select required class="custom-select" id="inputStateGroupRol">
+            <input name="newDescriptionRolText" id='newDescriptionRolText'type="text" placeholder="Ingrese descripción" required>
+            <label for="newStateRolSelect">Estado</label>
+            <select required class="custom-select" name="newStateRolSelect" id="newStateRolSelect">
                 <option value="1">Activo</option>
                 <option value="0">Inactivo</option>
             </select>

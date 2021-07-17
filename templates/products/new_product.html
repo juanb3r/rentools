@@ -9,28 +9,40 @@
 <body>
     <h1>Crear producto</h1>
     <div class="row">
-        <form action="">
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+              {% for message in messages%} 
+                <div class="alert alert-danger" role="alert">           
+                    {{ message }}
+                </div>
+              {% endfor %} 
+            {% endif %}
+          {% endwith %}
+    </div>
+    <div class="row">
+        <form action="{{url_for('new_product')}}"  method="POST">
             <label for="newNameProductText">Nombre</label>
-            <input id='newNameProductText'type="text" placeholder="Ingrese nombre" required>
+            <input name="newNameProductText" id='newNameProductText'type="text" placeholder="Ingrese nombre" required>
             <label for="newDescriptionProductText">Descripción</label>
-            <input id='newDescriptionProductText'type="text" 
+            <input name="newDescriptionProductText" id='newDescriptionProductText'type="text" 
             placeholder="Ingrese descripción" required>
             <label for="newCodeProductText">Código</label>
-            <input id='newCodeProductText'type="text" 
+            <input name="newCodeProductText" id='newCodeProductText'type="text" 
             placeholder="Ingrese código" required>
             <label for="newCurrentStockProductText">Cantidad bodega</label>
-            <input id='newCurrentStockProductText'type="number" placeholder="Ingrese cantidad actual" required>
+            <input name="newCurrentStockProductText" id='newCurrentStockProductText'type="number" placeholder="Ingrese cantidad actual" required>
             <label for="newStockProductText">Cantidad real</label>
-            <input id='newStockProductText'type="number" placeholder="Ingrese cantidad real" required>
+            <input name="newStockProductText" id='newStockProductText'type="number" placeholder="Ingrese cantidad real" required>
             <label for="newPriceProductText">Precio</label>
-            <input id='newPriceProductText'type="number" placeholder="Ingrese precio" required>
-            <label for="inputCatGroupProduct">Categoria</label>
-            <select required class="custom-select" id="inputCatGroupProduct">
-                <option value="HRM">Herramientas</option>
-                <option value="EQP">Equipos</option>
+            <input name="newPriceProductText" id='newPriceProductText'type="number" placeholder="Ingrese precio" required>
+            <label for="newCatProductSelect">Categoria</label>
+            <select name="newCatProductSelect" required class="custom-select" id="newCatProductSelect">
+                {% for c in categories %}
+                <option value="{{c.id}}">{{c.name}}</option>
+                {% endfor %}
             </select>
-            <label for="inputStateGroupProduct">Estado</label>
-            <select required class="custom-select" id="inputStateGroupProduct">
+            <label for="newStateProductSelect">Estado</label>
+            <select name="newStateProductSelect" required class="custom-select" id="newStateProductSelect">
                 <option value="1">Activo</option>
                 <option value="0">Inactivo</option>
             </select>

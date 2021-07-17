@@ -9,29 +9,40 @@
 <body>
     <h1>Crear usuario</h1>
     <div class="row">
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+              {% for message in messages%} 
+                <div class="alert alert-danger" role="alert">           
+                    {{ message }}
+                </div>
+              {% endfor %} 
+            {% endif %}
+          {% endwith %}
+    </div>
+    <div class="row">
         <form action="">
             <label for="newNameUserText">Nombre</label>
-            <input id='newNameUserText'type="text" placeholder="Ingrese nombre" required>
+            <input name="newNameUserText" id='newNameUserText'type="text" placeholder="Ingrese nombre" required>
             <label for="newDocumentUserText">Documento</label>
-            <input id='newDocumentUserText'type="text" 
+            <input name="newDocumentUserText" id='newDocumentUserText'type="text" 
             placeholder="Ingrese documento" required>
-            <label for="newDocumentUserText">Contraseña</label>
-            <input id='newDocumentUserText'type="password" 
-            placeholder="Ingrese documento" required>
+            <label for="newPasswordUserText">Contraseña</label>
+            <input name="newPasswordUserText" id='newPasswordUserText'type="password" 
+            placeholder="Ingrese clave" required>
             <label for="newPhoneUserText">Teléfono</label>
-            <input id='newPhoneUserText'type="tel" 
+            <input name="newPhoneUserText" id='newPhoneUserText'type="tel" 
             placeholder="Ingrese teléfono" required>
             <label for="newEmailUserText">Correo</label>
-            <input id='newEmailUserText'type="email" placeholder="Ingrese correo">
+            <input name="newEmailUserTexts" id='newEmailUserText'type="email" placeholder="Ingrese correo">
             <label for="newAddressUserText">Dirección</label>
-            <input id='newAddressUserText'type="text" placeholder="Ingrese dirección">
-            <label for="inputRolGroupUser">Rol</label>
-            <select required class="custom-select" id="inputRolGroupUser">
+            <input name="newAddressUserText" id='newAddressUserText'type="text" placeholder="Ingrese dirección">
+            <label for="newRolUserSelect">Rol</label>
+            <select name="newRolUserSelect" required class="custom-select" id="newRolUserSelect">
                 <option value="1">Admin</option>
                 <option value="2">Vendedor</option>
             </select>
-            <label for="inputStateGroupUser">Estado</label>
-            <select required class="custom-select" id="inputStateGroupUser">
+            <label for="newStateUserSelect">Estado</label>
+            <select name="newStateUserSelect" required class="custom-select" id="newStateUserSelect">
                 <option value="1">Activo</option>
                 <option value="0">Inactivo</option>
             </select>

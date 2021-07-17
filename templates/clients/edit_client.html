@@ -9,6 +9,17 @@
 <body>
     <h1>Editar cliente {{ cliente_id }}</h1>
     <div class="row">
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+              {% for message in messages%} 
+                <div class="alert alert-danger" role="alert">           
+                    {{ message }}
+                </div>
+              {% endfor %} 
+            {% endif %}
+          {% endwith %}
+    </div>
+    <div class="row">
         <form action="">
             <label for="editNameClientText">Nombre</label>
             <input id='editNameClientText'type="text" placeholder="Ingrese nombre" required value="Nombre">

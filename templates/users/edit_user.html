@@ -9,29 +9,40 @@
 <body>
     <h1>Editar usuario</h1>
     <div class="row">
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+              {% for message in messages%} 
+                <div class="alert alert-danger" role="alert">           
+                    {{ message }}
+                </div>
+              {% endfor %} 
+            {% endif %}
+          {% endwith %}
+    </div>
+    <div class="row">
         <form action="">
             <label for="editNameUserText">Nombre</label>
-            <input id='editNameUserText'type="text" placeholder="Ingrese nombre" required value="Nombre">
+            <input name="editNameUserText" id='editNameUserText'type="text" placeholder="Ingrese nombre" required value="Nombre">
             <label for="editDocumentUserText">Documento</label>
-            <input id='editDocumentUserText'type="text" 
+            <input name="editDocumentUserText" id='editDocumentUserText'type="text" 
             placeholder="Ingrese documento" required value="Documento">
-            <label for="editDocumentUserText">Contraseña</label>
-            <input id='editDocumentUserText'type="password" 
+            <label for="editPasswordUserText">Contraseña</label>
+            <input name="editPasswordUserText" id='editPasswordUserText'type="password" 
             placeholder="Ingrese documento" required value="*********">
             <label for="editPhoneUserText">Teléfono</label>
-            <input id='editPhoneUserText'type="tel" 
+            <input name="editPhoneUserText" id='editPhoneUserText'type="tel" 
             placeholder="Ingrese teléfono" required value="5000000">
             <label for="editEmailUserText">Correo</label>
-            <input id='editEmailUserText'type="email" placeholder="Ingrese correo" value="edit@usuario.com">
+            <input name="editEmailUserText" id='editEmailUserText'type="email" placeholder="Ingrese correo" value="edit@usuario.com">
             <label for="editAddressUserText">Dirección</label>
-            <input id='editAddressUserText'type="text" placeholder="Ingrese dirección" value="dirección # editar - usuario">
-            <label for="inputRolGroupUser">Rol</label>
-            <select required value="Nombre" class="custom-select" id="inputRolGroupUser">
+            <input name="editAddressUserText" id='editAddressUserText'type="text" placeholder="Ingrese dirección" value="dirección # editar - usuario">
+            <label for="editRolUserSelect">Rol</label>
+            <select required value="Nombre" name="editRolUserSelect" class="custom-select" id="editRolUserSelect">
                 <option value="1">Admin</option>
                 <option value="2">Vendedor</option>
             </select>
-            <label for="inputStateGroupUser">Estado</label>
-            <select required value="Nombre" class="custom-select" id="inputStateGroupUser">
+            <label for="editStateUserSelect">Estado</label>
+            <select required value="Nombre" name="editStateUserSelect" class="custom-select" id="editStateUserSelect">
                 <option value="1">Activo</option>
                 <option value="0">Inactivo</option>
             </select>

@@ -7,9 +7,57 @@
     <title>Categorias</title>
 </head>
 <body>
-    <h1>Se muestran las categorias</h1>
     <div class="row">
-        <a href="/categorias/nuevo">Crear categoria</a>
+        <h2>Categorías</h2>
+        <br>
+        <a href="/categorias/nuevo">Crear categoría</a>
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+              {% for message in messages%}
+                {% if message == 'Categoría eliminada'%}
+                  <div class="alert alert-danger" role="alert">           
+                {% else %}
+                  <div class="alert alert-success" role="alert">
+                {% endif %}
+                {{ message }}
+              {% endfor %}
+              </div>
+            {% endif %}
+          {% endwith %}
+        <br>
+        <table>
+            <tr>
+                <th>ID</th>
+                <th>Nombre</th>
+                <th>Descripción</th>
+                <th>Estado</th>
+                <th>Editar</th>
+                <th>Eliminar</th>
+            </tr>
+            {%for c in categories%}
+            <tr>
+                <td>{{c.id}}</td>
+                <td>{{c.name}}</td>
+                <td>{{c.description}}</td>
+                <td>
+                  {% if c.state == True %}
+                    Activo
+                  {% else %}
+                    Inactivo
+                  {% endif %}
+
+                </td>
+                <td><a href="/categorias/{{c.id}}/editar">Editar</a></td>
+                <td>
+                    <form onSubmit="return confirm('¿Desea eliminar esta categoría?');" action="{{url_for('delete_category', categoria_id = c.id)}}" method="POST">
+                    <input type="submit"  value="Eliminar" class="btn btn-danger">
+                    </form>
+                </td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+    <div class="row">
         <a href="../">regresar</a>
     </div>
 </body>

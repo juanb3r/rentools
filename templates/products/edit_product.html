@@ -9,28 +9,40 @@
 <body>
     <h1>Editar producto {{ producto_id }}</h1>
     <div class="row">
-        <form action="">
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+              {% for message in messages%} 
+                <div class="alert alert-danger" role="alert">           
+                    {{ message }}
+                </div>
+              {% endfor %} 
+            {% endif %}
+          {% endwith %}
+    </div>
+    <div class="row">
+        <form onSubmit="return confirm('¿Desea modificar este producto?');" action="{{url_for('edit_product', producto_id = product.id)}}"  method="POST">
             <label for="editNameProductText">Nombre</label>
-            <input id='editNameProductText'type="text" placeholder="Ingrese nombre" value="Ingrese nombre" required>
+            <input name="editNameProductText" id='editNameProductText'type="text" placeholder="Ingrese nombre" value="{{product.name}}" required>
             <label for="editDescriptionProductText">Descripción</label>
-            <input id='editDescriptionProductText'type="text" 
-            placeholder="Ingrese descripción" value="Ingrese descripción" required>
+            <input name="editDescriptionProductText" id='editDescriptionProductText'type="text" 
+            placeholder="Ingrese descripción" value="{{product.description}}" required>
             <label for="editCodeProductText">Código</label>
-            <input id='editCodeProductText'type="text" 
-            placeholder="Ingrese código" value="Ingrese código" required>
+            <input name="editCodeProductText" id='editCodeProductText'type="text" 
+            placeholder="Ingrese código" value="{{product.code}}" required>
             <label for="editCurrentStockProductText">Cantidad bodega</label>
-            <input id='editCurrentStockProductText'type="number" placeholder="Ingrese cantidad actual" value="3" required>
+            <input name="editCurrentStockProductText" id='editCurrentStockProductText'type="number" placeholder="Ingrese cantidad actual" value="{{product.current_stock}}" required>
             <label for="editStockProductText">Cantidad real</label>
-            <input id='editStockProductText'type="number" placeholder="Ingrese cantidad real" value="5" required>
+            <input name="editStockProductText" id='editStockProductText'type="number" placeholder="Ingrese cantidad real" value="{{product.stock}}" required>
             <label for="editPriceProductText">Precio</label>
-            <input id='editPriceProductText'type="number" placeholder="Ingrese precio" value="8" required>
-            <label for="inputCatGroupProduct">Categoria</label>
-            <select required class="custom-select" id="inputCatGroupProduct">
-                <option value="HRM">Herramientas</option>
-                <option value="EQP">Equipos</option>
+            <input name="editPriceProductText" id='editPriceProductText'type="number" placeholder="Ingrese precio" value="{{product.price}}" required>
+            <label for="editCatProductSelect">Categoria</label>
+            <select name="editCatProductSelect" required class="custom-select" id="editCatProductSelect">
+                {% for c in categories %}
+                <option value="{{c.id}}">{{c.name}}</option>
+                {% endfor %}
             </select>
-            <label for="inputStateGroupProduct">Estado</label>
-            <select required class="custom-select" id="inputStateGroupProduct">
+            <label for="editStateProductSelect">Estado</label>
+            <select name="editStateProductSelect" required class="custom-select" id="editStateProductSelect">
                 <option value="1">Activo</option>
                 <option value="0">Inactivo</option>
             </select>
