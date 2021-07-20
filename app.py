@@ -12,7 +12,9 @@ app = Flask(__name__)
 def page_not_found(e):
     return render_template('404.html'), 404
 
+
 app.register_error_handler(404, page_not_found)
+
 
 @app.route('/')
 @app.route('/inicio')
@@ -20,6 +22,7 @@ app.register_error_handler(404, page_not_found)
 @app.route('/index')
 def home():
     return render_template('home.html')
+
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
@@ -33,14 +36,17 @@ def register():
     return render_template('register.html', form=form)
 
 
-#CATEGORIES ROUTES
+# CATEGORIES ROUTES
 @app.route('/categorias')
 @app.route('/categorias/')
 def show_categories():
     categories = ctb.show_categories_tb()
-    return render_template('categories/categories.html', categories = categories)
+    return render_template(
+            'categories/categories.html',
+            categories=categories)
 
-@app.route('/categorias/nuevo', methods = ['GET', 'POST'])
+
+@app.route('/categorias/nuevo', methods=['GET', 'POST'])
 def new_category():
     if request.method == 'POST':
         name = request.form['newNameCatText'].upper()
@@ -65,7 +71,8 @@ def new_category():
 
     return render
 
-@app.route('/categorias/<int:categoria_id>/editar', methods = ['GET', 'POST'])
+
+@app.route('/categorias/<int:categoria_id>/editar', methods=['GET', 'POST'])
 def edit_category(categoria_id):
     category = ctb.get_category_by_id_tb(categoria_id)
 
@@ -74,7 +81,6 @@ def edit_category(categoria_id):
         description = request.form['editDescriptionCatText'].upper()
         state = request.form['editStateCatSelect']
         check = chf.check_fields(state, name, description)
-        
 
         if check['status']:
             category.name = name
@@ -86,13 +92,18 @@ def edit_category(categoria_id):
                 render = redirect(url_for('show_categories'))
             else:
                 flash('No se pudo editar categoría')
-                render = render_template('categories/edit_category.html', categoria_id = categoria_id)
+                render = render_template(
+                            'categories/edit_category.html',
+                            categoria_id=categoria_id)
         else:
             flash(check['msg'])
-            render = redirect(url_for('edit_category', categoria_id = categoria_id))
+            render = redirect(url_for(
+                            'edit_category', categoria_id=categoria_id))
     else:
-        render = render_template('categories/edit_category.html', categoria_id = categoria_id, category = category)
-    
+        render = render_template(
+                        'categories/edit_category.html',
+                        categoria_id=categoria_id, category=category)
+
     return render
 
 @app.route('/categorias/<int:categoria_id>/eliminar', methods = ['GET', 'POST'])
@@ -108,7 +119,8 @@ def delete_category(categoria_id):
 
         return render
 
-#PRODUCTS ROUTES
+
+# PRODUCTS ROUTES
 @app.route('/productos')
 @app.route('/productos/')
 def show_products():
@@ -364,8 +376,6 @@ def delete_rol(rol_id):
             render = redirect(url_for('show_roles'))
         
         return render
-
-
 
 
 if __name__ == '__main__':
