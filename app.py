@@ -12,7 +12,9 @@ app = Flask(__name__)
 def page_not_found(e):
     return render_template('404.html'), 404
 
+
 app.register_error_handler(404, page_not_found)
+
 
 @app.route('/')
 @app.route('/inicio')
@@ -20,6 +22,7 @@ app.register_error_handler(404, page_not_found)
 @app.route('/index')
 def home():
     return render_template('home.html')
+
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
@@ -33,14 +36,15 @@ def register():
     return render_template('register.html', form=form)
 
 
-#CATEGORIES ROUTES
+# CATEGORIES ROUTES
 @app.route('/categorias')
 @app.route('/categorias/')
 def show_categories():
     categories = ctb.show_categories_tb()
-    return render_template('categories/categories.html', categories = categories)
+    return render_template('categories/categories.html', categories=categories)
 
-@app.route('/categorias/nuevo', methods = ['GET', 'POST'])
+
+@app.route('/categorias/nuevo', methods=['GET', 'POST'])
 def new_category():
     if request.method == 'POST':
         name = request.form['newNameCatText'].upper()
@@ -65,7 +69,8 @@ def new_category():
 
     return render
 
-@app.route('/categorias/<int:categoria_id>/editar', methods = ['GET', 'POST'])
+
+@app.route('/categorias/<int:categoria_id>/editar', methods=['GET', 'POST'])
 def edit_category(categoria_id):
     category = ctb.get_category_by_id_tb(categoria_id)
 
@@ -74,8 +79,6 @@ def edit_category(categoria_id):
         description = request.form['editDescriptionCatText'].upper()
         state = request.form['editStateCatSelect']
         check = chf.check_fields(state, name, description)
-        
-
         if check['status']:
             category.name = name
             category.description = description
@@ -86,16 +89,21 @@ def edit_category(categoria_id):
                 render = redirect(url_for('show_categories'))
             else:
                 flash('No se pudo editar categoría')
-                render = render_template('categories/edit_category.html', categoria_id = categoria_id)
+                render = render_template(
+                    'categories/edit_category.html', categoria_id=categoria_id)
         else:
             flash(check['msg'])
-            render = redirect(url_for('edit_category', categoria_id = categoria_id))
+            render = redirect(url_for(
+                'edit_category', categoria_id=categoria_id))
     else:
-        render = render_template('categories/edit_category.html', categoria_id = categoria_id, category = category)
-    
+        render = render_template(
+            'categories/edit_category.html',
+            categoria_id=categoria_id, category=category)
+
     return render
 
-@app.route('/categorias/<int:categoria_id>/eliminar', methods = ['GET', 'POST'])
+
+@app.route('/categorias/<int:categoria_id>/eliminar', methods=['GET', 'POST'])
 def delete_category(categoria_id):
     if request.method == 'POST':
         result = ctb.delete_category_tb(categoria_id)
@@ -108,14 +116,17 @@ def delete_category(categoria_id):
 
         return render
 
-#PRODUCTS ROUTES
+# PRODUCTS ROUTES
+
+
 @app.route('/productos')
 @app.route('/productos/')
 def show_products():
     products = ptb.show_products_tb()
-    return render_template('products/products.html', products = products)
+    return render_template('products/products.html', products=products)
 
-@app.route('/productos/nuevo', methods = ['GET', 'POST'])
+
+@app.route('/productos/nuevo', methods=['GET', 'POST'])
 def new_product():
     categories = ctb.show_categories_tb()
     if request.method == 'POST':
@@ -127,26 +138,30 @@ def new_product():
         price = request.form['newPriceProductText']
         category_id = request.form['newCatProductSelect']
         state = request.form['newStateProductSelect']
-        check = chf.check_product(name, description, code, stock, c_stock, price, category_id, state)
+        check = chf.check_product(
+            name, description, code, stock, c_stock, price, category_id, state)
         if check['status']:
-            result = ptb.new_product_tb(name, description, code, stock, c_stock, price, check['cat_id'], check['state'])
+            result = ptb.new_product_tb(
+                name, description, code, stock, c_stock, price,
+                check['cat_id'], check['state'])
             if result:
                 flash('Producto creado')
                 render = redirect(url_for('show_products'))
             else:
                 flash('No se pudo crear producto')
-                render = render_template('products/new_product.html', categories = categories)
+                render = render_template(
+                    'products/new_product.html', categories=categories)
         else:
             flash(check['msg'])
             render = redirect(url_for('new_product'))
-        
-        
     else:
-        render = render_template('products/new_product.html', categories = categories)
+        render = render_template(
+            'products/new_product.html', categories=categories)
 
     return render
 
-@app.route('/productos/<int:producto_id>/editar', methods = ['GET', 'POST'])
+
+@app.route('/productos/<int:producto_id>/editar', methods=['GET', 'POST'])
 def edit_product(producto_id):
     categories = ctb.show_categories_tb()
     product = ptb.get_product_by_id_tb(producto_id)
@@ -159,7 +174,8 @@ def edit_product(producto_id):
         price = request.form['editPriceProductText']
         category_id = request.form['editCatProductSelect']
         state = request.form['editStateProductSelect']
-        check = chf.check_product(name, description, code, stock, c_stock, price, category_id, state)
+        check = chf.check_product(
+            name, description, code, stock, c_stock, price, category_id, state)
 
         if check['status']:
             product.name = name
@@ -176,17 +192,23 @@ def edit_product(producto_id):
                 render = redirect(url_for('show_products'))
             else:
                 flash('No se pudo editar producto')
-                render = render_template('products/edit_product.html', producto_id = producto_id, product = product, categories = categories)
+                render = render_template(
+                    'products/edit_product.html',
+                    producto_id=producto_id,
+                    product=product, categories=categories)
         else:
             flash(check['msg'])
             render = redirect(url_for('show_products'))
 
     else:
-        render = render_template('products/edit_product.html', producto_id = producto_id, product = product, categories = categories)
-    
+        render = render_template(
+            'products/edit_product.html', producto_id=producto_id,
+            product=product, categories=categories)
+
     return render
 
-@app.route('/productos/<int:producto_id>/eliminar', methods = ['GET', 'POST'])
+
+@app.route('/productos/<int:producto_id>/eliminar', methods=['GET', 'POST'])
 def delete_product(producto_id):
     if request.method == 'POST':
         result = ptb.delete_product_tb(producto_id)
@@ -196,7 +218,6 @@ def delete_product(producto_id):
         else:
             flash('No se pudo eliminar producto')
             render = redirect(url_for('show_products'))
-        
         return render
 
 
@@ -213,7 +234,8 @@ def delete_product(producto_id):
 
 # @app.route('/salidas/<int:salida_id>/detalles')
 # def show_checkout_details(salida_id):
-#     return render_template('checkouts/detailed_checkout.html', salida_id = salida_id)
+# return render_template(
+# 'checkouts/detailed_checkout.html', salida_id = salida_id)
 
 # @app.route('/salidas/<int:salida_id>/editar')
 # def edit_checkout(salida_id):
@@ -237,7 +259,8 @@ def delete_product(producto_id):
 
 # @app.route('/entradas/<int:entrada_id>/detalles')
 # def show_checkin_details(entrada_id):
-#     return render_template('checkins/detailed_checkin.html', entrada_id = entrada_id)
+# return render_template(
+# 'checkins/detailed_checkin.html', entrada_id = entrada_id)
 
 # @app.route('/entradas/<int:entrada_id>/editar')
 # def edit_checkin(entrada_id):
@@ -260,13 +283,14 @@ def delete_product(producto_id):
 
 # @app.route('/clientes/<int:cliente_id>/editar')
 # def edit_client(cliente_id):
-#     return render_template('clients/edit_client.html', cliente_id = cliente_id)
+# return render_template(
+# 'clients/edit_client.html', cliente_id = cliente_id)
 
 # @app.route('/clientes/<int:cliente_id>/eliminar')
 # def delete_client(cliente_id):
 #     return f'Eliminar clientes {cliente_id}'
 
-#USERS ROUTES
+# USERS ROUTES
 @app.route('/usuarios')
 @app.route('/usuarios/')
 def show_users():
@@ -277,23 +301,27 @@ def show_users():
 def new_user():
     return render_template('users/new_user.html')
 
+
 @app.route('/usuarios/<int:usuario_id>/editar')
 def edit_user(usuario_id):
     return render_template('users/edit_user.html', usuario_id)
+
 
 @app.route('/usuarios/<int:usuario_id>/eliminar')
 def delete_user(usuario_id):
     return f'Eliminar usuario {usuario_id}'
 
-#ROLES ROUTES
+# ROLES ROUTES
+
+
 @app.route('/roles')
 @app.route('/roles/')
 def show_roles():
     roles = rtb.show_roles_tb()
-    return render_template('roles/roles.html', roles = roles)
+    return render_template('roles/roles.html', roles=roles)
 
 
-@app.route('/roles/nuevo', methods = ['GET', 'POST'])
+@app.route('/roles/nuevo', methods=['GET', 'POST'])
 def new_rol():
     if request.method == 'POST':
         name = request.form['newNameRolText'].upper()
@@ -301,7 +329,6 @@ def new_rol():
         state = request.form['newStateRolSelect']
 
         check = chf.check_fields(state, name, description)
-        
 
         if check['status']:
             result = rtb.new_rol_tb(name, description, check['state'])
@@ -316,12 +343,11 @@ def new_rol():
             render = redirect(url_for('show_roles'))
     else:
         render = render_template('roles/new_rol.html')
-    
+
     return render
 
-    
 
-@app.route('/roles/<int:rol_id>/editar' ,methods = ['GET', 'POST'])
+@app.route('/roles/<int:rol_id>/editar', methods=['GET', 'POST'])
 def edit_rol(rol_id):
     rol = rtb.get_rol_by_id(rol_id)
     if request.method == 'POST':
@@ -341,18 +367,18 @@ def edit_rol(rol_id):
                 render = redirect(url_for('show_roles'))
             else:
                 flash('No se pudo editar rol')
-                render = redirect(url_for('edit_rol', rol_id = rol_id))
+                render = redirect(url_for('edit_rol', rol_id=rol_id))
         else:
             flash(check['msg'])
-            render = redirect(url_for('edit_rol', rol_id = rol_id))
-
+            render = redirect(url_for('edit_rol', rol_id=rol_id))
 
     else:
-        render = render_template('roles/edit_rol.html', rol_id = rol_id, rol = rol)
+        render = render_template('roles/edit_rol.html', rol_id=rol_id, rol=rol)
 
     return render
 
-@app.route('/roles/<int:rol_id>/eliminar', methods = ['GET', 'POST'])
+
+@app.route('/roles/<int:rol_id>/eliminar', methods=['GET', 'POST'])
 def delete_rol(rol_id):
     if request.method == 'POST':
         result = rtb.delete_rol_tb(rol_id)
@@ -362,13 +388,11 @@ def delete_rol(rol_id):
         else:
             flash('No se pudo eliminar rol')
             render = redirect(url_for('show_roles'))
-        
+
         return render
-
-
 
 
 if __name__ == '__main__':
     app.secret_key = 'Super-secret-key'
     app.debug = True
-    app.run(host='0.0.0.0', port = 9001)
+    app.run(host='0.0.0.0', port=9001)
