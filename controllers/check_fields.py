@@ -2,8 +2,8 @@ def check_fields(state, name, desc):
     check = {}
     try:
         check['state'] = int(state)
-        if check['state']<2:
-            if  name and desc:
+        if check['state'] < 2:
+            if name and desc:
                 check['status'] = True
                 check['msg'] = ''
             else:
@@ -22,20 +22,20 @@ def check_fields(state, name, desc):
 def check_product(name, desc, code, stock, c_stock, price, cat_id, state):
     check = {}
     try:
-        check['state']  = int(state)
+        check['state'] = int(state)
         check['cat_id'] = int(cat_id)
-        check['price']  = int(price)
+        check['price'] = int(price)
         check['stock'] = int(stock)
-        check['c_stock']  = int(c_stock)
-        
-        if check['state']<2:
+        check['c_stock'] = int(c_stock)
+
+        if check['state'] < 2:
             if name and desc and code:
                 check['status'] = True
                 check['msg'] = 'Testeado'
             else:
                 check['status'] = False
                 check['msg'] = 'Al menos uno de los campos de texto está vacío'
-            
+
     except ValueError:
         check['status'] = False
         status = True
@@ -53,11 +53,7 @@ def check_product(name, desc, code, stock, c_stock, price, cat_id, state):
                 check['msg'] = 'Dato inválido, la cantidad no es un número'
                 status = False
             elif not check.get('c_stock'):
-                check['msg'] = 'Dato inválido, la cantidad en bodega no es un número'
+                check['msg'] = 'Dato inválid,la cantidad en bodeg no es un num'
                 status = False
-        
-    return check
-        
 
-    
-    
+    return check
