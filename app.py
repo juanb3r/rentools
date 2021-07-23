@@ -145,21 +145,22 @@ def new_product():
             name, description, code, stock, c_stock, price, category_id, state)
         if check['status']:
             result = ptb.new_product_tb(
-                name, description, code, stock, c_stock, price,
-                check['cat_id'], check['state'])
+                                    name, description, code, stock, c_stock,
+                                    price, check['cat_id'], check['state'])
             if result:
                 flash('Producto creado')
                 render = redirect(url_for('show_products'))
             else:
                 flash('No se pudo crear producto')
                 render = render_template(
-                    'products/new_product.html', categories=categories)
+                            'products/new_product.html', categories=categories)
         else:
             flash(check['msg'])
             render = redirect(url_for('new_product'))
+
     else:
         render = render_template(
-            'products/new_product.html', categories=categories)
+                        'products/new_product.html', categories=categories)
 
     return render
 
@@ -196,17 +197,16 @@ def edit_product(producto_id):
             else:
                 flash('No se pudo editar producto')
                 render = render_template(
-                    'products/edit_product.html',
-                    producto_id=producto_id,
-                    product=product, categories=categories)
+                        'products/edit_product.html', producto_id=producto_id,
+                        product=product, categories=categories)
         else:
             flash(check['msg'])
             render = redirect(url_for('show_products'))
 
     else:
         render = render_template(
-            'products/edit_product.html', producto_id=producto_id,
-            product=product, categories=categories)
+                        'products/edit_product.html', producto_id=producto_id,
+                        product=product, categories=categories)
 
     return render
 
@@ -221,6 +221,7 @@ def delete_product(producto_id):
         else:
             flash('No se pudo eliminar producto')
             render = redirect(url_for('show_products'))
+
         return render
 
 
@@ -237,8 +238,7 @@ def delete_product(producto_id):
 
 # @app.route('/salidas/<int:salida_id>/detalles')
 # def show_checkout_details(salida_id):
-# return render_template(
-# 'checkouts/detailed_checkout.html', salida_id = salida_id)
+#     return render_template('checkouts/detailed_checkout.html', salida_id = salida_id)
 
 # @app.route('/salidas/<int:salida_id>/editar')
 # def edit_checkout(salida_id):
@@ -262,8 +262,7 @@ def delete_product(producto_id):
 
 # @app.route('/entradas/<int:entrada_id>/detalles')
 # def show_checkin_details(entrada_id):
-# return render_template(
-# 'checkins/detailed_checkin.html', entrada_id = entrada_id)
+#     return render_template('checkins/detailed_checkin.html', entrada_id = entrada_id)
 
 # @app.route('/entradas/<int:entrada_id>/editar')
 # def edit_checkin(entrada_id):
@@ -286,8 +285,7 @@ def delete_product(producto_id):
 
 # @app.route('/clientes/<int:cliente_id>/editar')
 # def edit_client(cliente_id):
-# return render_template(
-# 'clients/edit_client.html', cliente_id = cliente_id)
+#     return render_template('clients/edit_client.html', cliente_id = cliente_id)
 
 # @app.route('/clientes/<int:cliente_id>/eliminar')
 # def delete_client(cliente_id):
@@ -314,9 +312,8 @@ def edit_user(usuario_id):
 def delete_user(usuario_id):
     return f'Eliminar usuario {usuario_id}'
 
+
 # ROLES ROUTES
-
-
 @app.route('/roles')
 @app.route('/roles/')
 def show_roles():
@@ -350,7 +347,7 @@ def new_rol():
     return render
 
 
-@app.route('/roles/<int:rol_id>/editar', methods=['GET', 'POST'])
+@app.route('/roles/<int:rol_id>/editar' ,methods=['GET', 'POST'])
 def edit_rol(rol_id):
     rol = rtb.get_rol_by_id(rol_id)
     if request.method == 'POST':
@@ -391,8 +388,9 @@ def delete_rol(rol_id):
         else:
             flash('No se pudo eliminar rol')
             render = redirect(url_for('show_roles'))
-            
+
         return render
+
 
 if __name__ == '__main__':
     app.secret_key = 'Super-secret-key'
