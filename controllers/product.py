@@ -6,14 +6,23 @@ session = DBSession()
 session = session.get_session()
 
 
-def show_products_tb():
+def show_products_tb() -> Product:
     products = session.query(Product).all()
     return products
 
 
-def new_product_tb(name, description, code, stock,
-                   c_stock, price, category_id, state):
-    new_product = Product(name=name, description=description,
+def new_product_tb(
+        name: str,
+        description: str,
+        code: str,
+        stock: int,
+        c_stock,
+        price,
+        category_id,
+        state) -> bool:
+    new_product = Product(
+        name=name,
+        description=description,
                           code=code, current_stock=c_stock, stock=stock,
                           price=price, category_id=category_id, state=state)
     session.add(new_product)
