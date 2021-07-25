@@ -11,26 +11,45 @@
     <div class="row">
         {% with messages = get_flashed_messages() %}
             {% if messages %}
-              {% for message in messages%} 
-                <div class="alert alert-danger" role="alert">           
+                {% for message in messages%}
+                <div class="alert alert-danger" role="alert">
                     {{ message }}
                 </div>
-              {% endfor %} 
+                {% endfor %}
             {% endif %}
-          {% endwith %}
+        {% endwith %}
     </div>
     <div class="row">
-        <form action="{{url_for('new_category')}}" method="POST">
-            <label for="newNameCatText">Nombre</label>
-            <input id="newNameCatText" name="newNameCatText" type="text" placeholder="Ingrese nombre" required>
-            <label for="newDescriptionCatText">Descripción</label>
-            <input name="newDescriptionCatText" id="newDescriptionCatText" type="text" placeholder="Ingrese descripción" required>
-            <label for="newStateCatSelect">Estado</label>
-            <select required class="custom-select" id="newStateCatSelect" name="newStateCatSelect">
-                <option value="1">Activo</option>
-                <option value="0">Inactivo</option>
-            </select>
-            <input id='newCatSubmit'type="submit" value="Crear">
+        <form name="create" action="" method="POST" novalidate>
+            <fieldset class="form-group">
+                <legend>Crear categoría</legend>
+                {{form.hidden_tag()}}
+
+                <p>
+                    {{form.name.label}}</br>
+                    {{form.name(size=35)}}
+                    {% for error in form.name.errors %}
+                        <span class="error-message">{{ error }}</span>
+                    {% endfor %}
+                </p>
+
+                <p>
+                    {{form.description.label}}</br>
+                    {{form.description(size=35)}}
+                    {% for error in form.description.errors %}
+                        <span class="error-message">{{ error }}</span>
+                    {% endfor %}
+                </p>
+                <p>
+                    {{form.select.label}}</br>
+                    {{form.select}}
+                </p>
+                <p>
+                    {{form.submit()}}</br>
+                </p>
+            </fieldset>
+
+
         </form>
         <a href="/categorias">Regresar</a>
     </div>

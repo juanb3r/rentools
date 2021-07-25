@@ -4,9 +4,44 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.25/datatables.min.css"/>
+    <script type="text/javascript" src="https://cdn.datatables.net/v/dt/dt-1.10.25/datatables.min.js"></script>
     <title>Categorias</title>
 </head>
 <body>
+  <script language="JavaScript">
+    $(document).ready(function() {
+        $('#tbCategoria').DataTable( {
+            "language": {
+                "decimal":        "",
+                "emptyTable":     "Tabla vacía",
+                "info":           "Mostrando _START_ a _END_ de _TOTAL_ Registros",
+                "infoEmpty":      "Mostrando 0 a 0 de 0 Registros",
+                "infoFiltered":   "(filtered de _MAX_ total Registros)",
+                "infoPostFix":    "",
+                "thousands":      ",",
+                "lengthMenu":     "Mostrando _MENU_ Registros",
+                "loadingRecords": "Cargando...",
+                "processing":     "Procesando...",
+                "search":         "Buscar:",
+                "zeroRecords":    "No se encontró ningun registro",
+                "paginate": {
+                    "first":      "Primero",
+                    "last":       "Último",
+                    "next":       "Siguiente",
+                    "previous":   "Anterior"
+                },
+                "aria": {
+                    "sortAscending":  ": Activar para ordenar columna ascendentemente",
+                    "sortDescending": ": Activar para ordenar columna descendentemente"
+                }
+            }
+        } );
+    } );
+  </script>
     <div class="row">
         <h2>Categorías</h2>
         <br>
@@ -25,7 +60,8 @@
             {% endif %}
           {% endwith %}
         <br>
-        <table>
+        <table id="tbCategoria">
+          <thead>
             <tr>
                 <th>ID</th>
                 <th>Nombre</th>
@@ -34,6 +70,7 @@
                 <th>Editar</th>
                 <th>Eliminar</th>
             </tr>
+          </thead>
             {%for category in categories%}
             <tr>
                 <td>{{category.id}}</td>

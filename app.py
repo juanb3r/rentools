@@ -5,12 +5,14 @@ import controllers.rol as rtb
 from controllers.category import CategoryBD
 from flask import Flask, render_template, request, redirect, url_for, flash
 
-from controllers.form_checker import RegistrationForm
+from controllers.form_checker import RegistrationForm, CategoryForm
+from config import Config
 
 app = Flask(__name__)
 categories_bd = CategoryBD()
 products_bd = CategoryBD()
 roles_bd = CategoryBD()
+app.config.from_object(Config)
 
 
 def page_not_found(e):
@@ -53,30 +55,22 @@ def show_categories():
 
 @app.route('/categorias/nuevo', methods=['GET', 'POST'])
 def new_category():
-    if request.method == 'POST':
-        name = request.form['newNameCatText'].upper()
-        description = request.form['newDescriptionCatText'].upper()
-        state = request.form['newStateCatSelect']
+    form = CategoryForm()
 
-        check = chf.check_fields(state, name, description)
+    if form.validate_on_submit():
+        name = form.name.data.upper()
+        description = form.description.data.upper()
+        state = bool(form.select.data)
 
-        if check['status']:
-            result = categories_bd.new_category_tb(
-                name,
-                description,
-                check['state'])
-
-            if result:
-                flash('Nueva categoría creada')
-                render = redirect(url_for('show_categories'))
-            else:
-                flash('No se pudo crear categoría')
-                render = render_template('categories/new_category.html')
+        result = categories_bd.new_category_tb(name, description, state)
+        if result:
+            flash('Nueva categoría creada')
+            render = redirect(url_for('show_categories'))
         else:
-            flash(check['msg'])
-            render = render_template('categories/new_category.html')
+            flash('No se pudo crear categoría')
+            render = render_template('categories/new_category.html', form=form)
     else:
-        render = render_template('categories/new_category.html')
+        render = render_template('categories/new_category.html', form=form)
 
     return render
 

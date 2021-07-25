@@ -2,9 +2,10 @@ from controllers.database_setup import Category
 from controllers.db_session import DBSession
 
 
-class CategoryBD():
-    session = DBSession()
-    session = session.get_session()
+class CategoryBD:
+
+    def __init__(self) -> None:
+        self.session = DBSession().get_session()
 
     def show_categories_tb(self):
         categories = self.session.query(Category).all()
