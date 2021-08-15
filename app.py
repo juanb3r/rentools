@@ -1,16 +1,16 @@
 import controllers.check_fields as chf
-import controllers.product as ptb
 import controllers.rol as rtb
 
+from config import Config
 from controllers.category import CategoryBD
+from controllers.form_checker import RegistrationForm, CategoryForm, ProductForm
+from controllers.product import ProductDB
 from flask import Flask, render_template, request, redirect, url_for, flash
 
-from controllers.form_checker import RegistrationForm, CategoryForm
-from config import Config
 
 app = Flask(__name__)
 categories_bd = CategoryBD()
-products_bd = CategoryBD()
+products_bd = ProductDB()
 roles_bd = CategoryBD()
 app.config.from_object(Config)
 
@@ -60,7 +60,7 @@ def new_category():
     if form.validate_on_submit():
         name = form.name.data.upper()
         description = form.description.data.upper()
-        state = bool(form.select.data)
+        state = form.select.data
 
         result = categories_bd.new_category_tb(name, description, state)
         if result:
@@ -128,50 +128,44 @@ def delete_category(categoria_id):
 @app.route('/productos')
 @app.route('/productos/')
 def show_products():
-    products = ptb.show_products_tb()
+    products = products_bd.show_products_tb()
     return render_template('products/products.html', products=products)
 
 
 @app.route('/productos/nuevo', methods=['GET', 'POST'])
 def new_product():
-    categories = categories_bd.show_categories_tb()
-    if request.method == 'POST':
-        name = request.form['newNameProductText'].upper()
-        description = request.form['newDescriptionProductText'].upper()
-        code = request.form['newCodeProductText'].upper()
-        stock = request.form['newStockProductText']
-        c_stock = request.form['newCurrentStockProductText']
-        price = request.form['newPriceProductText']
-        category_id = request.form['newCatProductSelect']
-        state = request.form['newStateProductSelect']
-        check = chf.check_product(
-            name, description, code, stock, c_stock, price, category_id, state)
-        if check['status']:
-            result = ptb.new_product_tb(
-                                    name, description, code, stock, c_stock,
-                                    price, check['cat_id'], check['state'])
-            if result:
-                flash('Producto creado')
-                render = redirect(url_for('show_products'))
-            else:
-                flash('No se pudo crear producto')
-                render = render_template(
-                            'products/new_product.html', categories=categories)
-        else:
-            flash(check['msg'])
-            render = redirect(url_for('new_product'))
+    form = ProductForm()
 
+    if form.validate_on_submit():
+        name = form.name.data.upper()
+        description = form.description.data.upper()
+        code = form.code.data
+        stock = form.stock.data
+        available_stock = form.available_stock.data
+        price = form.price.data
+        category_id = int(form.category_id.data)
+        state = bool(form.select.data)
+        result = products_bd.new_product_tb(
+                    name, description, code, stock, available_stock,
+                    price, category_id, state)
+        if result:
+            flash('Producto creado')
+            render = redirect(url_for('show_products'))
+        else:
+            flash('No se pudo crear producto')
+            render = render_template(
+                        'products/new_product.html', form=form)
     else:
         render = render_template(
-                        'products/new_product.html', categories=categories)
+                        'products/new_product.html', form=form)
 
     return render
 
 
 @app.route('/productos/<int:producto_id>/editar', methods=['GET', 'POST'])
 def edit_product(producto_id):
-    categories = CategoryBD.show_categories_tb()
-    product = ptb.get_product_by_id_tb(producto_id)
+    categories = categories_bd.show_categories_tb()
+    product = products_bd.get_product_by_id_tb(producto_id)
     if request.method == 'POST':
         name = request.form['editNameProductText'].upper()
         description = request.form['editDescriptionProductText'].upper()
@@ -193,7 +187,7 @@ def edit_product(producto_id):
             product.price = check['price']
             product.category_id = check['cat_id']
             product.state = check['state']
-            result = ptb.edit_product_tb(product)
+            result = products_bd.edit_product_tb(product)
             if result:
                 flash('Producto editado correctamente')
                 render = redirect(url_for('show_products'))
@@ -217,7 +211,7 @@ def edit_product(producto_id):
 @app.route('/productos/<int:producto_id>/eliminar', methods=['GET', 'POST'])
 def delete_product(producto_id):
     if request.method == 'POST':
-        result = ptb.delete_product_tb(producto_id)
+        result = products_bd.delete_product_tb(producto_id)
         if result:
             flash('Producto eliminado')
             render = redirect(url_for('show_products'))
@@ -237,7 +231,7 @@ def show_checkouts():
 
 @app.route('/salidas/nuevo')
 def new_checkout():
-    products = ptb.show_products_tb()
+    products = products_bd.show_products_tb()
     return render_template('checkouts/new_checkout.html', products=products)
 
 
@@ -271,7 +265,9 @@ def delete_checkout(salida_id):
 
 # @app.route('/entradas/<int:entrada_id>/detalles')
 # def show_checkin_details(entrada_id):
-#     return render_template('checkins/detailed_checkin.html', entrada_id = entrada_id)
+#     return render_template(
+#           'checkins/detailed_checkin.html',
+#           entrada_id = entrada_id)
 
 # @app.route('/entradas/<int:entrada_id>/editar')
 # def edit_checkin(entrada_id):
@@ -294,7 +290,9 @@ def delete_checkout(salida_id):
 
 # @app.route('/clientes/<int:cliente_id>/editar')
 # def edit_client(cliente_id):
-#     return render_template('clients/edit_client.html', cliente_id = cliente_id)
+#     return render_template(
+#           'clients/edit_client.html',
+#           cliente_id = cliente_id)
 
 # @app.route('/clientes/<int:cliente_id>/eliminar')
 # def delete_client(cliente_id):
